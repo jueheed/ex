@@ -8,5 +8,5 @@ Eclipse.  This project is pure python based.
 
 
 Note: sample data is not included here which can be downloaded from wiki page provided.
-      sample data for train model can use sample 3 as base, then modify it with expected key words with sentense.
+      sample data for train model can use sample 1, then each test case there meet 100% expectation.
 

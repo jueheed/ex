@@ -9,7 +9,8 @@ from pprint import pprint
 
 
 class TrainNerEx:
-   TRAIN_DATA= [('I am writing to report a deal which has aroused my suspicion who does a money laundering.', {'entities': [(72, 88, 'KW')]}), ('The fraudulent from the release of the deposit would be handled by the lawyers.', {'entities': [(4, 14, 'KW')]}), ('The fraud was also investigated by police but there is no result.', {'entities': [(4, 9, 'KW'), (35, 41, 'KW')]})]
+   #TRAIN_DATA= [('I am writing to report a deal which has aroused my suspicion who does a money laundering.', {'entities': [(72, 88, 'KW')]}), ('The fraudulent from the release of the deposit would be handled by the lawyers.', {'entities': [(4, 14, 'KW')]}), ('The fraud was also investigated by police but there is no result.', {'entities': [(4, 9, 'KW'), (35, 41, 'KW')]})]
+   TRAIN_DATA= [('Introduction:Internal Case #C92646759\nFinTRAC Reference Number: 348729667', {'entities': [(38, 45, 'ORG')]}), ('On 1/12/2017 Capital One Bank USA, NA (COBUSANA) detected patterns of activity on credit card account number 1234567890123456', {'entities': [(3, 12, 'DATE'), (13, 33, 'ORG'), (35, 37, 'GPE')]}), ('Capital One has identified an unknown suspect', {'entities': [(0, 11, 'ORG')]}), ('All supporting documentation is maintained by Capital One Bank (USA) N.A.', {'entities': [(46, 62, 'ORG')]}), ('The suspicious activity was conducted in Canada with Walmart, restaurants, Target, Quality Inn, Best Buy and other brick and mortar merchants', {'entities': [(41, 47, 'GPE'), (53, 60, 'ORG'), (75, 81, 'ORG'), (83, 94, 'ORG'), (96, 104, 'ORG')]}), ('From 3/15/2016 to 5/14/2016 suspicious activity occurred totaling $8,098.76', {'entities': [(5, 14, 'DATE'), (18, 27, 'DATE'), (66, 75, 'MONEY')]}), ('The sample is drawn from transaction activity occurring from 5/12/2016 to 5/14/2016', {'entities': [(61, 70, 'DATE'), (74, 83, 'DATE')]}), ('Included in Section B of this report is a sampling of transactional activity totaling $30.0', {'entities': [(86, 91, 'MONEY')]})]
 
    def train_spacy(self, data, iters):
 
@@ -46,16 +47,16 @@ class TrainNerEx:
                   print(losses)
           return nlp
       
-   def ner_search(self):
+   def ner_search(self,file):
       # Read whole documents
-      f=open('data/traindata.txt', "r")
+      f=open(file, "r")
       message=f.read()
       TRAIN_DATA = self.TRAIN_DATA
       nlp =  self.train_spacy(TRAIN_DATA,20)
 
-      # Save our trained Model
-      model_file = 'custommodel'
 
+      model_file = 'custommodel'
+      # Save our trained Model
       nlp.to_disk(model_file)
 
       #Test each sentence from train data
@@ -65,15 +66,18 @@ class TrainNerEx:
       nlp = spacy.load(model_file)
       doc = nlp(message)
 
-      return doc.ents
+      entities=[]
+      for ent in doc.ents:
+          entities.append((ent.text, ent.label_))
+      return entities
       
 
       
 if __name__ == '__main__':
-   entities=TrainNerEx().ner_search()
+   entities=TrainNerEx().ner_search('data/data1.txt')
    
    # Find named entities from the message
-   pprint([(entity.text, entity.label_) for entity in entities])
+   pprint([(entity) for entity in entities])
    
    #for entity in doc.ents:
    #    print(entity.text, entity.label_)
