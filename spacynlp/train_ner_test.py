@@ -10,9 +10,11 @@ from train_ner_example import TrainNerEx as TrainNerExClass
 
 #common features for other three classes
 class CommonUnitTest(unittest.TestCase):
-    def get_text(self, entity):
+    @staticmethod
+    def get_text(entity):
         return entity[0]
-    def get_type(self, entity, entity_type):
+    @staticmethod    
+    def get_type(entity, entity_type):
         return entity[1] == entity_type
 
 #load first short message in which a train data has been created against what expected, catch entities, then test

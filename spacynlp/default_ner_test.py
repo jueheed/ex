@@ -4,9 +4,11 @@ from default_ner_example import DefaultNerEx as DefaultNerExClass
 
 #common features for other three classes
 class CommonUnitTest(unittest.TestCase):
-    def get_text(self, entity):
+    @staticmethod
+    def get_text(entity):
         return entity[0]
-    def get_type(self, entity, entity_type):
+    @staticmethod    
+    def get_type(entity, entity_type):
         return entity[1] == entity_type
 
 #load first short message, catch entities, then test
