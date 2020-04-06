@@ -14,5 +14,6 @@ I also create a simple prototype rest API (api.py) to test the functonality base
 as following:
 1. pip out flask library
 2. python api.py
-3. go to url: http://localhost:5000 to see the result of ner search
+3. go to url: 'http://localhost:5000/api/v1/resources/entities/all' to see the whole result of ner search
+      or url: 'http://localhost:5000/api/v1/resources/entities?label=ORG' to see the partial result of ner search by label(category/type)
 
